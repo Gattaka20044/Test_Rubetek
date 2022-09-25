@@ -7,5 +7,4 @@ interface DeviceRepository {
 
     val allDevices: LiveData<List<Device>>
     suspend fun insertDevice(noteModel: Device)
-    //suspend fun deleteNote(noteModel: Device, onSuccess:() -> UInt)
 }

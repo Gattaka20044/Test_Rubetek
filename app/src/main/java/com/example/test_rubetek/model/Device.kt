@@ -6,17 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "device_table")
 data class Device(
-//    val id: String,
-//    val `class`: String,
-//    val type: String,
-//    val icon: String,
-//    val name: String,
-//    val room: String,
-//    val hidden: Boolean,
-//    val favorite: Boolean,
-//    val disabled: Boolean,
-//    val online: Boolean
-
     @PrimaryKey(autoGenerate = false)
     var id: String = "",
     var `class`: String = "",
@@ -27,4 +16,4 @@ data class Device(
     var favorite: Boolean = false,
     var disabled: Boolean = false,
     var online: Boolean = false,
-    )
+)
