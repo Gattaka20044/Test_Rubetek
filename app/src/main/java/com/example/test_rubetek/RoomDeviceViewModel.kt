@@ -19,6 +19,7 @@ class RoomDeviceViewModel(application: Application) : AndroidViewModel(applicati
     val roomDeviceLiveData: MutableLiveData<RoomDevice>
     val context = application
     lateinit var repository: DeviceRepository
+    val room = mutableListOf<String>()
 
     init {
         roomDeviceLiveData = MutableLiveData()
@@ -66,4 +67,18 @@ class RoomDeviceViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertDevice(device)
         }
+
+    fun sort(roomDevice: RoomDevice): Set<String> {
+
+
+        val items = roomDevice.devices.size
+
+        for ( item in  0 until items )
+        {
+            room.add(item, roomDevice.devices[item].room )
+        }
+        return room.toSet()
+    }
 }
+
+//data class Rum(val name: Int)

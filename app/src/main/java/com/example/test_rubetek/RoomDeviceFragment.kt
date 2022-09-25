@@ -40,6 +40,8 @@ class RoomDeviceFragment : Fragment() {
 
         viewModel.getObserver().observe(viewLifecycleOwner) {
             Log.d("TAG", "${it.devices.size}")
+            Log.d("Sort", "${viewModel.sort(it)}")
+
             val items = it.devices.size
         }
 
