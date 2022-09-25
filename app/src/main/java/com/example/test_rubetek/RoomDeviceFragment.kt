@@ -1,20 +1,21 @@
 package com.example.test_rubetek
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.test_rubetek.databinding.FragmentRoomDeviceBinding
+import com.example.test_rubetek.databinding.ItemRoomBinding
+import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.viewbinding.BindableItem
+
 
 class RoomDeviceFragment : Fragment() {
 
     lateinit var binding: FragmentRoomDeviceBinding
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: DeviceAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,39 +38,23 @@ class RoomDeviceFragment : Fragment() {
             viewModel.getResponse()
         }
 
-
         viewModel.getObserver().observe(viewLifecycleOwner) {
-            Log.d("TAG", "${it.devices.size}")
-            Log.d("Sort", "${viewModel.sort(it)}")
-
             val items = it.devices.size
-        }
-
-        viewModel.getObserver().observe(viewLifecycleOwner) {
-            Log.d("TAG", "${it.devices.size}")
-            val items = it.devices.size
-
             for ( item in  0 until items ) {
-                viewModel.insert(Device(
-                    id = it.devices[item].id,
-                    `class` = it.devices[item].`class`,
-                    icon = it.devices[item].icon,
-                    name = it.devices[item].name,
-                    room = it.devices[item].room,
-                    hidden = it.devices[item].hidden,
-                    favorite = it.devices[item].favorite,
-                    disabled = it.devices[item].disabled,
-                    online = it.devices[item].online,
-                ))
+                viewModel.insert(viewModel.setDevice(it.devices[item]))
             }
         }
 
-        recyclerView = binding.rvNotes
-        adapter = DeviceAdapter()
-        recyclerView.adapter = adapter
-
         viewModel.getAllNotes().observe(viewLifecycleOwner){
-            adapter.setList(it)
+            val sortRoom = viewModel.sortRoom(it)
+            val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
+            for (item in sortRoom.indices){
+                val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
+                devices.add(item,viewModel.getDevice(sortDevice, sortRoom[item]))
+            }
+
+
+            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
         }
     }
 

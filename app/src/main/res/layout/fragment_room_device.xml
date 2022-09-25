@@ -7,10 +7,10 @@
     tools:context=".RoomDeviceFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_notes"
+        android:id="@+id/rv_room"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_layout"
+        tools:listitem="@layout/item_room"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </LinearLayout>
