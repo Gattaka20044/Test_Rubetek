@@ -1,6 +1,7 @@
 package com.example.test_rubetek
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.test_rubetek.items.MainCardItem
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
+import kotlinx.android.synthetic.main.item_room.view.*
 
 
 class RoomDeviceFragment : Fragment() {
@@ -60,8 +62,8 @@ class RoomDeviceFragment : Fragment() {
                 devices.add(item,getDevice)
             }
 
-
             binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
+
         }
     }
 
