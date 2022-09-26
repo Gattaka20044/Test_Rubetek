@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.test_rubetek.databinding.FragmentRoomDeviceBinding
 import com.example.test_rubetek.databinding.ItemRoomBinding
+import com.example.test_rubetek.items.MainCardItem
+import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
 
@@ -54,7 +56,8 @@ class RoomDeviceFragment : Fragment() {
             val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
             for (item in sortRoom.indices){
                 val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
-                devices.add(item,viewModel.getDevice(sortDevice, sortRoom[item]))
+                val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
+                devices.add(item,getDevice)
             }
 
 

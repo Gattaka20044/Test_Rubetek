@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp">
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="15dp">
 
@@ -20,8 +20,7 @@
                 android:layout_width="63dp"
                 android:layout_height="58dp"
 
-                android:layout_marginStart="150dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_device"
                 tools:ignore="MissingConstraints" />
 
@@ -45,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Online"
-
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@+id/name_device"
                 app:layout_constraintTop_toBottomOf="@+id/name_device" />
