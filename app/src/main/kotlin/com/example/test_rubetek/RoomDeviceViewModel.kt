@@ -1,13 +1,8 @@
 package com.example.test_rubetek
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import androidx.lifecycle.*
 import com.example.test_rubetek.api.ApiGSON
-import com.example.test_rubetek.api.RetrofitInstance
 import com.example.test_rubetek.database.database.DeviceDatabase
 import com.example.test_rubetek.database.repository.DeviceRealization
 import com.example.test_rubetek.database.repository.DeviceRepository
@@ -16,59 +11,64 @@ import com.example.test_rubetek.items.DeviceItem
 import com.example.test_rubetek.items.MainCardItem
 import com.xwray.groupie.viewbinding.BindableItem
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RoomDeviceViewModel(application: Application) : AndroidViewModel(application) {
 
-    val roomDeviceLiveData: MutableLiveData<RoomDevice>
+    //val roomDeviceLiveData: MutableLiveData<RoomDevice>
+
+    private val _roomDeviceStateFlow = MutableStateFlow(RoomDevice(listOf()))
+    val roomDeviceStateFlow: StateFlow<RoomDevice> = _roomDeviceStateFlow.asStateFlow()
+//    private var _response : MutableStateFlow<List<Device>> = MutableStateFlow(emptyList())
+//    var response: StateFlow<List<Device>> = _response.asStateFlow()
     val context = application
-    lateinit var repository: DeviceRepository
 
-
-    init {
-        roomDeviceLiveData = MutableLiveData()
-    }
-
-    fun getResponse() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val retroInstance = RetrofitInstance.getRetrofitInstance().create(ApiGSON::class.java)
-            val response = retroInstance.fetchRoomDevice()
-            roomDeviceLiveData.postValue(response)
-
-        }
-    }
-
-    fun getObserver(): MutableLiveData<RoomDevice> {
-        return roomDeviceLiveData
-    }
-
-    fun internetCheck(c: Context): Boolean {
-        val cmg = c.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            cmg.getNetworkCapabilities(cmg.activeNetwork)?.let { networkCapabilities ->
-                return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-            }
-        } else {
-            return cmg.activeNetworkInfo?.isConnectedOrConnecting == true
-        }
-
-        return false
-    }
 
     fun initDatabase() {
         val device = DeviceDatabase.getInstance(context).getDeviceDao()
-        repository = DeviceRealization(device)
+        App.repository = DeviceRealization(device)
     }
 
-    fun getAllNotes(): LiveData<List<Device>> {
-        return repository.allDevices
+//    init {
+//        roomDeviceLiveData = MutableLiveData()
+//    }
+
+    fun getResponse() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val retroInstance = App.getRetrofitInstance().create(ApiGSON::class.java)
+            val response = retroInstance.fetchRoomDevice()
+            _roomDeviceStateFlow.value = response
+        }
     }
+
+//    fun getObserver(): MutableLiveData<RoomDevice> {
+//        return _roomDeviceStateFlow
+//    }
+
+
+
+
+
+//    fun getAllDevice() {
+//
+//        _response.value = repository.allDevices
+//
+//    }
+//    fun getAllDevice(): List<Device> {
+//        var response = listOf<Device>()
+//        viewModelScope.launch(Dispatchers.IO) {
+//           response = repository.allDevices
+//        }
+//        return response
+//    }
 
     fun insert(device: Device) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertDevice(device)
+            App.repository.insertDevice(device)
         }
 
     fun sortDevice(
