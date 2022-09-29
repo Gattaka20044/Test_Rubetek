@@ -1,7 +1,13 @@
 package com.example.test_rubetek.items
 
+import android.app.Activity
+import android.app.Application
+import android.content.Context
 import android.graphics.Color
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.example.test_rubetek.App
 import com.example.test_rubetek.Device
 import com.example.test_rubetek.R
 import com.example.test_rubetek.databinding.ItemDeviceBinding
@@ -9,15 +15,19 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class DeviceItem(private val content: Device) : BindableItem<ItemDeviceBinding>() {
 
+    val context = App.instance
+
     override fun bind(viewBinding: ItemDeviceBinding, position: Int) {
         viewBinding.apply {
             nameDevice.text = content.name
             if (content.online){
                 onlineDevice.setText(R.string.online)
-                onlineDevice.setTextColor(Color.GREEN)
+                val color = context.resources.getColor(R.color.blue)
+                deviceView.setCardBackgroundColor(color)
             }else{
                 onlineDevice.setText(R.string.offline)
-                onlineDevice.setTextColor(Color.RED)
+                val color = context.resources.getColor(R.color.white)
+                deviceView.setCardBackgroundColor(color)
             }
             val image = when (content.icon) {
                 "water_sensor" -> R.drawable.ic_water_sensor

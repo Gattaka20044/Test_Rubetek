@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#DCDCDC</color>
     <color name="green">#45730F</color>
-    <color name="red">#912B2B</color>
+    <color name="primary">#EAEAEA</color>
+    <color name="primary_screen">#EAEAEA</color>
+    <color name="blue">#53ACFF</color>
 </resources>

@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.test_rubetek.App
 import com.example.test_rubetek.R
 import com.example.test_rubetek.databinding.ItemRoomBinding
 import com.xwray.groupie.ExpandableGroup
@@ -15,9 +16,10 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class MainCardItem(
     private val title: String,
-    //private val visibility: String,
     private val items: List<BindableItem<*>>
 ) : BindableItem<ItemRoomBinding>(){
+
+    val context = App.instance
 
     override fun bind(viewBinding: ItemRoomBinding, position: Int) {
         viewBinding.apply {
@@ -26,12 +28,13 @@ class MainCardItem(
             rvItem.setOnClickListener {
                 if (recyclerDevice.visibility == GONE){
                     recyclerDevice.visibility = VISIBLE
-                    imageExpand.setImageResource(R.drawable.ic_baseline_expand_less_24)
+                    imageExpand.setImageResource(R.drawable.ic_baseline_navigate_next_24)
                 }else{
                     recyclerDevice.visibility = GONE
                     imageExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
                 }
             }
+            recyclerDevice.layoutManager = GridLayoutManager(context,2)
         }
     }
 

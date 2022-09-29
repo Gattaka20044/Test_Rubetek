@@ -1,17 +1,18 @@
-package com.example.test_rubetek
+package com.example.test_rubetek.ui.roomdevice
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.test_rubetek.App
+import com.example.test_rubetek.Device
+import com.example.test_rubetek.RoomDevice
 import com.example.test_rubetek.api.ApiGSON
 import com.example.test_rubetek.database.database.DeviceDatabase
 import com.example.test_rubetek.database.repository.DeviceRealization
-import com.example.test_rubetek.database.repository.DeviceRepository
 import com.example.test_rubetek.databinding.ItemRoomBinding
 import com.example.test_rubetek.items.DeviceItem
 import com.example.test_rubetek.items.MainCardItem
 import com.xwray.groupie.viewbinding.BindableItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,6 +33,7 @@ class RoomDeviceViewModel(application: Application) : AndroidViewModel(applicati
         val device = DeviceDatabase.getInstance(context).getDeviceDao()
         App.repository = DeviceRealization(device)
     }
+
 
 //    init {
 //        roomDeviceLiveData = MutableLiveData()

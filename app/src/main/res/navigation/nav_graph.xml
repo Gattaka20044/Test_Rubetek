@@ -7,7 +7,27 @@
 
     <fragment
         android:id="@+id/roomDeviceFragment"
-        android:name="com.example.test_rubetek.RoomDeviceFragment"
-        android:label="fragment_room_device"
+        android:name="com.example.test_rubetek.ui.roomdevice.RoomDeviceFragment"
+        android:label="@string/room_rubetek"
         tools:layout="@layout/fragment_room_device" />
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.test_rubetek.ui.favourites.FavouritesFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_favourites" />
+    <fragment
+        android:id="@+id/camerasFragment"
+        android:name="com.example.test_rubetek.ui.cameras.CamerasFragment"
+        android:label="fragment_cameras"
+        tools:layout="@layout/fragment_cameras" />
+    <fragment
+        android:id="@+id/controlFragment"
+        android:name="com.example.test_rubetek.ui.control.ControlFragment"
+        android:label="fragment_control"
+        tools:layout="@layout/fragment_control" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.test_rubetek.ui.notifications.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" />
 </navigation>

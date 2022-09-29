@@ -1,7 +1,6 @@
-package com.example.test_rubetek
+package com.example.test_rubetek.ui.roomdevice
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.test_rubetek.App
+import com.example.test_rubetek.R
 import com.example.test_rubetek.databinding.FragmentRoomDeviceBinding
 import com.example.test_rubetek.databinding.ItemRoomBinding
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
-import kotlinx.android.synthetic.main.item_room.view.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 

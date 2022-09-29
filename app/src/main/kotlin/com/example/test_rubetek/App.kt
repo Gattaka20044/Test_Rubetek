@@ -19,6 +19,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        app = this
         //initDatabase()
     }
 
@@ -29,13 +30,9 @@ class App : Application() {
 
         lateinit var repository: DeviceRepository
 
-
-
         fun getAllDevice(): LiveData<List<Device>> {
             return repository.allDevices
         }
-
-
 
         fun internetCheck(c: Context): Boolean {
             val cmg = c.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -59,6 +56,9 @@ class App : Application() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
+
+        private lateinit var app: App
+        val instance: App get() = app
 
     }
 
