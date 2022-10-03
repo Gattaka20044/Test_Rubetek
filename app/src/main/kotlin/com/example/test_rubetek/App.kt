@@ -5,10 +5,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.lifecycle.LiveData
-import com.example.test_rubetek.database.database.DeviceDatabase
-import com.example.test_rubetek.database.repository.DeviceRealization
-import com.example.test_rubetek.database.repository.DeviceRepository
+import com.example.test_rubetek.di.apiModules
+import com.example.test_rubetek.di.databaseModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,7 +22,17 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
-        //initDatabase()
+
+        startKoin {
+            androidLogger(Level.DEBUG)
+            androidContext(this@App)
+            modules(
+                listOf(
+                    apiModules,
+                    databaseModule
+                )
+            )
+        }
     }
 
 
@@ -28,11 +40,6 @@ class App : Application() {
 
     companion object{
 
-        lateinit var repository: DeviceRepository
-
-        fun getAllDevice(): LiveData<List<Device>> {
-            return repository.allDevices
-        }
 
         fun internetCheck(c: Context): Boolean {
             val cmg = c.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -48,7 +55,6 @@ class App : Application() {
 
             return false
         }
-
         val baseURL = "https://gist.githubusercontent.com/"
         fun getRetrofitInstance(): Retrofit {
             return Retrofit.Builder()
