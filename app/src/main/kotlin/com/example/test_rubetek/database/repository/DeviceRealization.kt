@@ -15,7 +15,4 @@ class DeviceRealization(private val deviceDao: DeviceDao) : DeviceRepository {
     override suspend fun insertDevice(device: Device) {
         deviceDao.insert(device)
     }
-
-
-
 }

@@ -40,9 +40,7 @@ class RoomDeviceFragment : Fragment() {
     }
 
     private fun init(){
-//        viewModel.initDatabase()
         viewModel.getResponse()
-
         lifecycleScope.launchWhenStarted {
             viewModel.roomDeviceStateFlow.onEach {
                 val items = it.devices.size
@@ -69,18 +67,18 @@ class RoomDeviceFragment : Fragment() {
 //            }.collect()
 //            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
 //        }
-//        App.getAllDevice().observe(viewLifecycleOwner){
-//            val sortRoom = viewModel.sortRoom(it)
-//            val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
-//            for (item in sortRoom.indices){
-//                val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
-//                val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
-//                devices.add(item,getDevice)
-//            }
-//
-//            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
-//
-//        }
+        viewModel.getAllDevice().observe(viewLifecycleOwner){
+            val sortRoom = viewModel.sortRoom(it)
+            val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
+            for (item in sortRoom.indices){
+                val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
+                val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
+                devices.add(item,getDevice)
+            }
+
+            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
+
+        }
     }
 
     override fun onDestroyView() {

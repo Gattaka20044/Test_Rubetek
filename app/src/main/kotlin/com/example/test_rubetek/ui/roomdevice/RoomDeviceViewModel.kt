@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class RoomDeviceViewModel(private val networkHelper: NetworkHelper,
                           private val apiHelper: ApiHelper,
-                          private val deviceDatabase: DeviceDatabase
+                          private val deviceDatabase: DeviceRealization
 ) : ViewModel() {
 
     //val roomDeviceLiveData: MutableLiveData<RoomDevice>
@@ -32,8 +32,6 @@ class RoomDeviceViewModel(private val networkHelper: NetworkHelper,
     val roomDeviceStateFlow: StateFlow<RoomDevice> = _roomDeviceStateFlow.asStateFlow()
 //    private var _response : MutableStateFlow<List<Device>> = MutableStateFlow(emptyList())
 //    var response: StateFlow<List<Device>> = _response.asStateFlow()
-//    val context = App.instance
-    //val repository
 
 
 
@@ -44,32 +42,14 @@ class RoomDeviceViewModel(private val networkHelper: NetworkHelper,
         }
     }
 
-//    fun getObserver(): MutableLiveData<RoomDevice> {
-//        return _roomDeviceStateFlow
-//    }
 
-
-//    fun getAllDevice() {
-//
-//        _response.value = repository.allDevices
-//
-//    }
-//    fun getAllDevice(): List<Device> {
-//        var response = listOf<Device>()
-//        viewModelScope.launch(Dispatchers.IO) {
-//           response = repository.allDevices
-//        }
-//        return response
-//    }
-
-//    fun getAllDevice(): LiveData<List<Device>> {
-//        return repository.allDevices
-//    }
+    fun getAllDevice(): LiveData<List<Device>> {
+        return deviceDatabase.allDevices
+    }
 
     fun insert(device: Device) =
         viewModelScope.launch(Dispatchers.IO) {
             deviceDatabase.insertDevice(device)
-            deviceDatabase.
         }
 
     fun sortDevice(
