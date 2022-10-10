@@ -1,6 +1,7 @@
 package com.example.test_rubetek.ui.roomdevice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,32 +53,19 @@ class RoomDeviceFragment : Fragment() {
 
             }.collect()
         }
-//        lifecycleScope.launchWhenStarted {
-//            viewModel.response.onEach {
-//                Log.d("tag", "$it")
-//                val sortRoom = viewModel.sortRoom(it)
-//                val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
-//                for (item in sortRoom.indices){
-//                    val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
-//                    val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
-//                    devices.add(item,getDevice)
-//                }
-////
-//                binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
-//            }.collect()
-//            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
-//        }
-        viewModel.getAllDevice().observe(viewLifecycleOwner){
-            val sortRoom = viewModel.sortRoom(it)
-            val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
-            for (item in sortRoom.indices){
-                val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
-                val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
-                devices.add(item,getDevice)
-            }
+        lifecycleScope.launchWhenStarted {
+            viewModel.response.onEach {
+                Log.d("tag", "$it")
+                val sortRoom = viewModel.sortRoom(it)
+                val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
+                for (item in sortRoom.indices){
+                    val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
+                    val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
+                    devices.add(item,getDevice)
+                }
 
-            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
-
+                binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
+            }.collect()
         }
     }
 

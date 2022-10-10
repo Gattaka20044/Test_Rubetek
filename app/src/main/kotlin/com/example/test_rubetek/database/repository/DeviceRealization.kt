@@ -9,8 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 
 class DeviceRealization(private val deviceDao: DeviceDao) : DeviceRepository {
 
-    override val allDevices: LiveData<List<Device>>
-        get() = deviceDao.getAllDevices()
+//    override val  allDevices: StateFlow<List<Device>>
+//        get() = deviceDao.getAllDevices()
+
+    override suspend fun allDevices(): List<Device> {
+        return deviceDao.getAllDevices()
+    }
 
     override suspend fun insertDevice(device: Device) {
         deviceDao.insert(device)

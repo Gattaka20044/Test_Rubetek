@@ -26,12 +26,11 @@ class RoomDeviceViewModel(private val networkHelper: NetworkHelper,
                           private val deviceDatabase: DeviceRealization
 ) : ViewModel() {
 
-    //val roomDeviceLiveData: MutableLiveData<RoomDevice>
 
     private val _roomDeviceStateFlow = MutableStateFlow(RoomDevice(listOf()))
     val roomDeviceStateFlow: StateFlow<RoomDevice> = _roomDeviceStateFlow.asStateFlow()
-//    private var _response : MutableStateFlow<List<Device>> = MutableStateFlow(emptyList())
-//    var response: StateFlow<List<Device>> = _response.asStateFlow()
+    private var _response : MutableStateFlow<List<Device>> = MutableStateFlow(listOf(Device()))
+    var response: StateFlow<List<Device>> = _response.asStateFlow()
 
 
 
@@ -40,11 +39,14 @@ class RoomDeviceViewModel(private val networkHelper: NetworkHelper,
             val response = apiHelper.fetchRoomDevice()
             _roomDeviceStateFlow.value = response
         }
+        getAllDevice()
     }
 
 
-    fun getAllDevice(): LiveData<List<Device>> {
-        return deviceDatabase.allDevices
+    fun getAllDevice() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _response.value = deviceDatabase.allDevices()
+        }
     }
 
     fun insert(device: Device) =
