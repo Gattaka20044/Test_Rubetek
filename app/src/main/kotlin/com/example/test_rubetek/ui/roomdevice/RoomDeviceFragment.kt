@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.test_rubetek.App
 import com.example.test_rubetek.R
@@ -17,10 +15,11 @@ import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.viewbinding.BindableItem
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class RoomDeviceFragment : Fragment() {
-    //private val viewModel = ViewModelProvider(this)[RoomDeviceViewModel::class.java]
+    private val viewModel : RoomDeviceViewModel by viewModel()
     private var _binding: FragmentRoomDeviceBinding? = null
     private val binding
         get() = _binding!!
@@ -41,16 +40,8 @@ class RoomDeviceFragment : Fragment() {
     }
 
     private fun init(){
-        val viewModel = ViewModelProvider(this)[RoomDeviceViewModel::class.java]
-        viewModel.initDatabase()
-        if (context?.let { App.internetCheck(it) } == true)
-        {
-            viewModel.getResponse()
-
-        }else{
-            Toast.makeText(context, R.string.not_internet, Toast.LENGTH_SHORT).show()
-        }
-
+//        viewModel.initDatabase()
+        viewModel.getResponse()
 
         lifecycleScope.launchWhenStarted {
             viewModel.roomDeviceStateFlow.onEach {
@@ -78,18 +69,18 @@ class RoomDeviceFragment : Fragment() {
 //            }.collect()
 //            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
 //        }
-        App.getAllDevice().observe(viewLifecycleOwner){
-            val sortRoom = viewModel.sortRoom(it)
-            val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
-            for (item in sortRoom.indices){
-                val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
-                val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
-                devices.add(item,getDevice)
-            }
-
-            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
-
-        }
+//        App.getAllDevice().observe(viewLifecycleOwner){
+//            val sortRoom = viewModel.sortRoom(it)
+//            val devices = mutableListOf<BindableItem<ItemRoomBinding>>()
+//            for (item in sortRoom.indices){
+//                val sortDevice = viewModel.sortDevice(it,it,sortRoom[item])
+//                val getDevice = viewModel.getDevice(sortDevice, sortRoom[item])
+//                devices.add(item,getDevice)
+//            }
+//
+//            binding.rvRoom.adapter = GroupieAdapter().apply { addAll(devices) }
+//
+//        }
     }
 
     override fun onDestroyView() {

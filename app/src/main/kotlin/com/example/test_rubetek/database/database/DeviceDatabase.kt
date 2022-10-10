@@ -12,16 +12,16 @@ import com.example.test_rubetek.database.dao.DeviceDao
 abstract class DeviceDatabase: RoomDatabase() {
     abstract fun getDeviceDao(): DeviceDao
 
-    companion object{
-        private var database: DeviceDatabase ?= null
-        @Synchronized
-        fun getInstance(context: Context): DeviceDatabase{
-            return if (database == null){
-                database = Room.databaseBuilder(context, DeviceDatabase::class.java, "database").build()
-                database as DeviceDatabase
-            }else{
-                database as DeviceDatabase
-            }
-        }
-    }
+//    companion object{
+//        private var database: DeviceDatabase ?= null
+//        @Synchronized
+//        fun getInstance(context: Context): DeviceDatabase{
+//            return if (database == null){
+//                database = Room.databaseBuilder(context, DeviceDatabase::class.java, "database").build()
+//                database as DeviceDatabase
+//            }else{
+//                database as DeviceDatabase
+//            }
+//        }
+//    }
 }

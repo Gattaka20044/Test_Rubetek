@@ -5,12 +5,15 @@ import androidx.lifecycle.*
 import com.example.test_rubetek.App
 import com.example.test_rubetek.Device
 import com.example.test_rubetek.RoomDevice
-import com.example.test_rubetek.api.ApiGSON
+import com.example.test_rubetek.api.ApiHelper
+import com.example.test_rubetek.api.ApiService
 import com.example.test_rubetek.database.database.DeviceDatabase
 import com.example.test_rubetek.database.repository.DeviceRealization
+import com.example.test_rubetek.database.repository.DeviceRepository
 import com.example.test_rubetek.databinding.ItemRoomBinding
 import com.example.test_rubetek.items.DeviceItem
 import com.example.test_rubetek.items.MainCardItem
+import com.example.test_rubetek.utils.NetworkHelper
 import com.xwray.groupie.viewbinding.BindableItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +21,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RoomDeviceViewModel(application: Application) : AndroidViewModel(application) {
+class RoomDeviceViewModel(private val networkHelper: NetworkHelper,
+                          private val apiHelper: ApiHelper,
+                          private val deviceDatabase: DeviceDatabase
+) : ViewModel() {
 
     //val roomDeviceLiveData: MutableLiveData<RoomDevice>
 
@@ -26,23 +32,14 @@ class RoomDeviceViewModel(application: Application) : AndroidViewModel(applicati
     val roomDeviceStateFlow: StateFlow<RoomDevice> = _roomDeviceStateFlow.asStateFlow()
 //    private var _response : MutableStateFlow<List<Device>> = MutableStateFlow(emptyList())
 //    var response: StateFlow<List<Device>> = _response.asStateFlow()
-    val context = application
+//    val context = App.instance
+    //val repository
 
 
-    fun initDatabase() {
-        val device = DeviceDatabase.getInstance(context).getDeviceDao()
-        App.repository = DeviceRealization(device)
-    }
-
-
-//    init {
-//        roomDeviceLiveData = MutableLiveData()
-//    }
 
     fun getResponse() {
         viewModelScope.launch(Dispatchers.IO) {
-            val retroInstance = App.getRetrofitInstance().create(ApiGSON::class.java)
-            val response = retroInstance.fetchRoomDevice()
+            val response = apiHelper.fetchRoomDevice()
             _roomDeviceStateFlow.value = response
         }
     }
@@ -50,9 +47,6 @@ class RoomDeviceViewModel(application: Application) : AndroidViewModel(applicati
 //    fun getObserver(): MutableLiveData<RoomDevice> {
 //        return _roomDeviceStateFlow
 //    }
-
-
-
 
 
 //    fun getAllDevice() {
@@ -68,9 +62,14 @@ class RoomDeviceViewModel(application: Application) : AndroidViewModel(applicati
 //        return response
 //    }
 
+//    fun getAllDevice(): LiveData<List<Device>> {
+//        return repository.allDevices
+//    }
+
     fun insert(device: Device) =
         viewModelScope.launch(Dispatchers.IO) {
-            App.repository.insertDevice(device)
+            deviceDatabase.insertDevice(device)
+            deviceDatabase.
         }
 
     fun sortDevice(

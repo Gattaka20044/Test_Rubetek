@@ -19,8 +19,6 @@ class MainCardItem(
     private val items: List<BindableItem<*>>
 ) : BindableItem<ItemRoomBinding>(){
 
-    val context = App.instance
-
     override fun bind(viewBinding: ItemRoomBinding, position: Int) {
         viewBinding.apply {
             room.text = title
@@ -34,7 +32,7 @@ class MainCardItem(
                     imageExpand.setImageResource(R.drawable.ic_baseline_expand_more_24)
                 }
             }
-            recyclerDevice.layoutManager = GridLayoutManager(context,2)
+            recyclerDevice.layoutManager = GridLayoutManager(viewBinding.root.context,2)
         }
     }
 

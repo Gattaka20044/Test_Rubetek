@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.StateFlow
 interface DeviceRepository {
 
     val allDevices: LiveData<List<Device>>
-    suspend fun insertDevice(noteModel: Device)
+    suspend fun insertDevice(device: Device)
 }

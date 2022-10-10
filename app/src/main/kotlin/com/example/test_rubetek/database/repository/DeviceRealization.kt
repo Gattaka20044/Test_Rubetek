@@ -12,8 +12,8 @@ class DeviceRealization(private val deviceDao: DeviceDao) : DeviceRepository {
     override val allDevices: LiveData<List<Device>>
         get() = deviceDao.getAllDevices()
 
-    override suspend fun insertDevice(noteModel: Device) {
-        deviceDao.insert(noteModel)
+    override suspend fun insertDevice(device: Device) {
+        deviceDao.insert(device)
     }
 
 
